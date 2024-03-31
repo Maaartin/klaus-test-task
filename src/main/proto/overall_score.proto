@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "common.proto";
+
+service OverallScoreService {
+  rpc getOverallScore(OverallScoreRequest) returns (OverallScoreResponse);
+}
+
+message OverallScoreRequest {
+  string periodStartDate = 1;
+  string periodEndDate = 2;
+}
+
+message OverallScoreResponse {
+  int32 score = 1;
+}
