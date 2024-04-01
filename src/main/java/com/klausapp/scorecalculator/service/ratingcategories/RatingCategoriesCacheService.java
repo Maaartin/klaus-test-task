@@ -5,8 +5,8 @@ import java.util.Map;
 
 public interface RatingCategoriesCacheService {
 
-    Map<Long, String> getRatingCategoryNames();
+    Map<Integer, String> getRatingCategoryNames();
 
-    Map<Long, BigDecimal> getRatingCategoryWeights();
+    Map<Integer, BigDecimal> getRatingCategoryWeights();
 
 }

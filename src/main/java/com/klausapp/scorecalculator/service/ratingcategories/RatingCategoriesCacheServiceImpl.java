@@ -14,8 +14,8 @@ import java.util.Map;
 public class RatingCategoriesCacheServiceImpl implements RatingCategoriesCacheService {
 
     private final RatingCategoriesRepository ratingCategoriesRepository;
-    private final Map<Long, String> categoryNameById;
-    private final Map<Long, BigDecimal> categoryWeightById;
+    private final Map<Integer, String> categoryNameById;
+    private final Map<Integer, BigDecimal> categoryWeightById;
 
     public RatingCategoriesCacheServiceImpl(RatingCategoriesRepository ratingCategoriesRepository) {
         this.ratingCategoriesRepository = ratingCategoriesRepository;
@@ -33,12 +33,12 @@ public class RatingCategoriesCacheServiceImpl implements RatingCategoriesCacheSe
     }
 
     @Override
-    public Map<Long, String> getRatingCategoryNames() {
+    public Map<Integer, String> getRatingCategoryNames() {
         return categoryNameById;
     }
 
     @Override
-    public Map<Long, BigDecimal> getRatingCategoryWeights() {
+    public Map<Integer, BigDecimal> getRatingCategoryWeights() {
         return categoryWeightById;
     }
 }
