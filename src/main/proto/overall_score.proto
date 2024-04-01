@@ -13,5 +13,5 @@ message OverallScoreRequest {
 }
 
 message OverallScoreResponse {
-  int32 score = 1;
+  int32 scorePercentage = 1;
 }

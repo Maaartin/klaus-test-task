@@ -19,7 +19,7 @@ public class OverallScoreServiceImpl extends OverallScoreServiceGrpc.OverallScor
         int score = overallScoreCalculator
                 .calculateOverallScoreForPeriod(
                         LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate()));
-        OverallScoreResponse response = OverallScoreResponse.newBuilder().setScore(score).build();
+        OverallScoreResponse response = OverallScoreResponse.newBuilder().setScorePercentage(score).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
