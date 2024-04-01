@@ -1,7 +1,7 @@
 package com.klausapp.scorecalculator.service.calculator;
 
 import com.klausapp.scorecalculator.dao.Rating;
-import com.klausapp.scorecalculator.dao.RatingsRepository;
+import com.klausapp.scorecalculator.service.ratings.RatingsService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,20 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public class OverallScoreCalculatorImpl implements OverallScoreCalculator {
 
-    private final RatingsRepository ratingsRepository;
+    private final RatingsService ratingsService;
     private final TicketScoreCalculator ticketScoreCalculator;
 
-    public OverallScoreCalculatorImpl(RatingsRepository ratingsRepository,
-                                      TicketScoreCalculator ticketScoreCalculator) {
-        this.ratingsRepository = ratingsRepository;
+    public OverallScoreCalculatorImpl(RatingsService ratingsService, TicketScoreCalculator ticketScoreCalculator) {
+        this.ratingsService = ratingsService;
         this.ticketScoreCalculator = ticketScoreCalculator;
     }
 
     @Override
     public int calculateOverallScoreForPeriod(LocalDate periodStart, LocalDate periodEnd) {
-        List<Rating> ratings = ratingsRepository.findRatingsForPeriod(periodStart, periodEnd.plusDays(1));
-        Map<Integer, List<Rating>> ratingsByTicket = ratings.stream()
-                .collect(Collectors.groupingBy(Rating::ticketId));
+        Map<Integer, List<Rating>> ratingsByTicket = ratingsService.findRatingsByTicketIdInPeriod(periodStart, periodEnd);
         return calculateOverallScore(ratingsByTicket);
     }
 
