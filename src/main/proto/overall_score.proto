@@ -1,5 +1,7 @@
 syntax = "proto3";
-import "common.proto";
+option java_multiple_files = true;
+option java_package = "com.klausapp.scorecalculator.service.overallscore";
+option java_outer_classname = "OverallScoreProto";
 
 service OverallScoreService {
   rpc getOverallScore(OverallScoreRequest) returns (OverallScoreResponse);
