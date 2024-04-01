@@ -14,7 +14,7 @@ message TicketCategoryScoresRequest {
 
 message CategoryScore {
   int32 category_id = 1;
-  int32 category_score = 2;
+  optional int32 category_score = 2;
 }
 
 message TicketCategoryScore {

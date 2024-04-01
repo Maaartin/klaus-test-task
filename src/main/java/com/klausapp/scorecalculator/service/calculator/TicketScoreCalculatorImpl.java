@@ -4,25 +4,22 @@ import com.klausapp.scorecalculator.dao.Rating;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TicketScoreCalculatorImpl implements TicketScoreCalculator {
 
-    private final CategoryScoreCalculator categoryScoreCalculator;
+    private final TicketCategoryScoreCalculator ticketCategoryScoreCalculator;
 
-    public TicketScoreCalculatorImpl(CategoryScoreCalculator categoryScoreCalculator) {
-        this.categoryScoreCalculator = categoryScoreCalculator;
+    public TicketScoreCalculatorImpl(TicketCategoryScoreCalculator ticketCategoryScoreCalculator) {
+        this.ticketCategoryScoreCalculator = ticketCategoryScoreCalculator;
     }
 
     @Override
-    public int calculateTicketScore(List<Rating> ratings) {
-        List<BigDecimal> scores = new ArrayList<>();
-        for (Rating rating : ratings) {
-            scores.add(categoryScoreCalculator.calculateCategoryScore(rating.ratingCategoryId(), rating.rating()));
-        }
-        return (int) Math.round(scores.stream()
+    public int calculateTicketScore(List<Rating> ticketRatings) {
+        Map<Integer, BigDecimal> ticketScoresByCategory = ticketCategoryScoreCalculator.getTicketScoresByCategory(ticketRatings);
+        return (int) Math.round(ticketScoresByCategory.values().stream()
                 .mapToInt(BigDecimal::intValue)
                 .average()
                 .orElse(0.0));

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TicketScoreCalculator {
 
-    int calculateTicketScore(List<Rating> ratings);
+    int calculateTicketScore(List<Rating> ticketRatings);
 
 }

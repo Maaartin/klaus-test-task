@@ -1,4 +1,4 @@
 package com.klausapp.scorecalculator.dao;
 
-public record Rating(Long id, Integer rating, Long ticketId, Integer ratingCategoryId) {
+public record Rating(Integer id, Integer rating, Integer ticketId, Integer ratingCategoryId) {
 }

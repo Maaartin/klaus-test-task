@@ -25,14 +25,14 @@ public class OverallScoreCalculatorImpl implements OverallScoreCalculator {
     @Override
     public int calculateOverallScoreForPeriod(LocalDate periodStart, LocalDate periodEnd) {
         List<Rating> ratings = ratingsRepository.findRatingsForPeriod(periodStart, periodEnd.plusDays(1));
-        Map<Long, List<Rating>> ratingsByTicket = ratings.stream()
+        Map<Integer, List<Rating>> ratingsByTicket = ratings.stream()
                 .collect(Collectors.groupingBy(Rating::ticketId));
         return calculateOverallScore(ratingsByTicket);
     }
 
-    private int calculateOverallScore(Map<Long, List<Rating>> ratingsByTicket) {
+    private int calculateOverallScore(Map<Integer, List<Rating>> ratingsByTicket) {
         List<Integer> ticketScores = new ArrayList<>();
-        for (Map.Entry<Long, List<Rating>> entry : ratingsByTicket.entrySet()) {
+        for (Map.Entry<Integer, List<Rating>> entry : ratingsByTicket.entrySet()) {
             ticketScores.add(ticketScoreCalculator.calculateTicketScore(entry.getValue()));
         }
         return (int) Math.round(ticketScores.stream()
