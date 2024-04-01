@@ -1,8 +1,7 @@
-package com.klausapp.scorecalculator.service.overallscore;
+package com.klausapp.scorecalculator.service.calculator;
 
 import com.klausapp.scorecalculator.dao.Rating;
 import com.klausapp.scorecalculator.dao.RatingsRepository;
-import com.klausapp.scorecalculator.service.ticket.TicketScoreCalculator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

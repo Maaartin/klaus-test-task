@@ -1,4 +1,4 @@
-package com.klausapp.scorecalculator.service.overallscore;
+package com.klausapp.scorecalculator.service.calculator;
 
 import java.time.LocalDate;
 

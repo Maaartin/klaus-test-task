@@ -1,6 +1,5 @@
-package com.klausapp.scorecalculator.service.scorechange;
+package com.klausapp.scorecalculator.service.calculator;
 
-import com.klausapp.scorecalculator.service.overallscore.OverallScoreCalculator;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

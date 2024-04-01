@@ -1,5 +1,6 @@
 package com.klausapp.scorecalculator.service.scorechange;
 
+import com.klausapp.scorecalculator.service.calculator.ScoreChangeCalculator;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 

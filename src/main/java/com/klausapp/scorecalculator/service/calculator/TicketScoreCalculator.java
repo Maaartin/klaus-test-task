@@ -1,4 +1,4 @@
-package com.klausapp.scorecalculator.service.ticket;
+package com.klausapp.scorecalculator.service.calculator;
 
 import com.klausapp.scorecalculator.dao.Rating;
 
