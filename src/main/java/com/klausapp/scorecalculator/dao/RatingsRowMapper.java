@@ -19,7 +19,8 @@ public class RatingsRowMapper implements RowMapper<Rating> {
                 rs.getInt("id"),
                 rs.getInt("rating"),
                 rs.getInt("ticket_id"),
-                rs.getInt("rating_category_id"));
+                rs.getInt("rating_category_id"),
+                rs.getDate("created_at"));
     }
 
 }

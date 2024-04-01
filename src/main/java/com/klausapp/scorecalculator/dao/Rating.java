@@ -1,4 +1,6 @@
 package com.klausapp.scorecalculator.dao;
 
-public record Rating(Integer id, Integer rating, Integer ticketId, Integer ratingCategoryId) {
+import java.util.Date;
+
+public record Rating(Integer id, Integer rating, Integer ticketId, Integer ratingCategoryId, Date createdAt) {
 }

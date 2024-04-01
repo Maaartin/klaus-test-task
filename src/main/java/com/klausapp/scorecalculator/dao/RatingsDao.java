@@ -20,7 +20,7 @@ public class RatingsDao implements RatingsRepository {
     @Override
     public List<Rating> findRatingsForPeriod(LocalDate periodStart, LocalDate periodEnd) {
         String sql = """
-                SELECT id, rating, ticket_id, rating_category_id
+                SELECT id, rating, ticket_id, rating_category_id, created_at
                 FROM ratings
                 WHERE created_at >= :periodStart
                   AND created_at < :periodEnd
