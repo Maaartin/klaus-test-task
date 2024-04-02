@@ -1,5 +1,6 @@
 package com.klausapp.scorecalculator.dao;
 
+import com.klausapp.scorecalculator.util.DateUtil;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -15,12 +16,13 @@ public class RatingsRowMapper implements RowMapper<Rating> {
 
     @Override
     public Rating mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String createdAt = rs.getString("created_at");
         return new Rating(
                 rs.getInt("id"),
                 rs.getInt("rating"),
                 rs.getInt("ticket_id"),
                 rs.getInt("rating_category_id"),
-                rs.getDate("created_at"));
+                DateUtil.convertStringToLocalDateTime(createdAt));
     }
 
 }
