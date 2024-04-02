@@ -9,6 +9,9 @@ import java.math.RoundingMode;
 @Service
 public class ScoreCalculatorImpl implements ScoreCalculator {
 
+    private static final BigDecimal MAX_RATING = new BigDecimal(5);
+    private static final BigDecimal HUNDRED = new BigDecimal(100);
+
     private final RatingCategoriesCacheService ratingCategoriesCacheService;
 
     public ScoreCalculatorImpl(RatingCategoriesCacheService ratingCategoriesCacheService) {
@@ -23,11 +26,11 @@ public class ScoreCalculatorImpl implements ScoreCalculator {
     }
 
     private static BigDecimal calculateScore(Integer rating, BigDecimal weight) {
-        BigDecimal maxRating = BigDecimal.valueOf(5).multiply(weight);
-        return new BigDecimal(rating)
+        BigDecimal score = new BigDecimal(rating)
                 .multiply(weight)
-                .divide(maxRating, 2, RoundingMode.HALF_UP)
+                .divide(MAX_RATING, 2, RoundingMode.HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
+        return HUNDRED.min(score);
     }
 
 }
