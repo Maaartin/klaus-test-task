@@ -9,8 +9,7 @@ To containerize the project we could use Docker.
 Since the Maven build also provides the JAR file, we could run it as a Docker image composed together with the `database.db` volume.
 
 ### Ideas for improvement
-* I limited the "Aggregated category scores over a period of time" max period to be 1 year. Otherwise, the weekly results might be inaccurate due to the implementation, where numbers of the week aren't separated by year.
-* Refactor AggregatedCategoryScoreServiceImpl.java to fix the bug mentioned above and make it more readable.
+* Refactor AggregatedCategoryScoreServiceImpl.java to make it more readable.
 * Write Javadoc to describe some classes and methods.
 * Use gRPC stream response to return larger datasets, e.g. for "Scores by ticket".
 
