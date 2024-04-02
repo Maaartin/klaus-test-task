@@ -1,0 +1,28 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.klausapp.scorecalculator.service.categoryscores";
+option java_outer_classname = "CategoryScoresProto";
+
+service CategoryScoresService {
+  rpc getCategoryScores(CategoryScoresRequest) returns (CategoryScoresResponse);
+}
+
+message CategoryScoresRequest {
+  string period_start_date = 1;
+  string period_end_date = 2;
+}
+
+message TimeUnitScore {
+  string time_unit = 1;
+  optional int32 score = 2;
+}
+
+message CategoryScores {
+  string category_name = 1;
+  int32 number_of_ratings = 2;
+  repeated TimeUnitScore time_unit_scores = 3;
+}
+
+message CategoryScoresResponse {
+  repeated CategoryScores category_scores = 1;
+}
