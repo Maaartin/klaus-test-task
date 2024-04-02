@@ -10,7 +10,6 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,7 @@ public class CategoryScoresServiceImpl extends CategoryScoresServiceGrpc.Categor
     @Override
     public void getCategoryScores(CategoryScoresRequest request, StreamObserver<CategoryScoresResponse> responseObserver) {
         if (DateUtil.getMonthsBetween(LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate())) >= 12) {
-            Status status = Status.newBuilder()
-                    .setCode(Code.INVALID_ARGUMENT_VALUE)
-                    .setMessage("Time period can't be longer than 12 months!")
-                    .build();
+            Status status = getTimePeriodExceptionStatus();
             responseObserver.onError(StatusProto.toStatusRuntimeException(status));
         } else {
             List<AggregatedCategoryScores> aggregatedCategoryScores =
@@ -41,6 +37,13 @@ public class CategoryScoresServiceImpl extends CategoryScoresServiceGrpc.Categor
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
+    }
+
+    private static Status getTimePeriodExceptionStatus() {
+        return Status.newBuilder()
+                .setCode(Code.INVALID_ARGUMENT_VALUE)
+                .setMessage("Time period can't be longer than 12 months!")
+                .build();
     }
 
     private static CategoryScoresResponse buildResponse(List<AggregatedCategoryScores> aggregatedCategoryScores) {
@@ -60,9 +63,7 @@ public class CategoryScoresServiceImpl extends CategoryScoresServiceGrpc.Categor
             categoryScoresBuilder.addAllTimeUnitScores(timeUnitScores);
             responseBuilder.addCategoryScores(categoryScoresBuilder.build());
         }
-
-        CategoryScoresResponse response = responseBuilder.build();
-        return response;
+        return responseBuilder.build();
     }
 
 }

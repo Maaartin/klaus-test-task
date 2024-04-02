@@ -26,7 +26,12 @@ public class TicketCategoryScoresServiceImpl extends TicketCategoryScoresService
     @Override
     public void getTicketCategoryScores(TicketCategoryScoresRequest request, StreamObserver<TicketCategoryScoresResponse> responseObserver) {
         Map<Integer, List<Rating>> ratingsByTicket = ratingsService.findRatingsByTicketIdInPeriod(LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate()));
+        TicketCategoryScoresResponse response = buildResponse(ratingsByTicket);
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 
+    private TicketCategoryScoresResponse buildResponse(Map<Integer, List<Rating>> ratingsByTicket) {
         TicketCategoryScoresResponse.Builder responseBuilder = TicketCategoryScoresResponse.newBuilder();
         for (Map.Entry<Integer, List<Rating>> entry : ratingsByTicket.entrySet()) {
             Map<Integer, BigDecimal> ticketScoresByCategoryId = ticketCategoryScoreCalculator.calculateTicketCategoryScoresByCategoryId(entry.getValue());
@@ -46,9 +51,7 @@ public class TicketCategoryScoresServiceImpl extends TicketCategoryScoresService
                             .addAllCategoryScores(categoryScores)
                             .build());
         }
-        TicketCategoryScoresResponse response = responseBuilder.build();
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+        return responseBuilder.build();
     }
 
 }
