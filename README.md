@@ -1,3 +1,20 @@
+# Solution to the Software Engineer Test Task
+* This project is written in Java. 
+* It's using the [gRPC Spring Boot Starter dependency](https://github.com/yidongnan/grpc-spring-boot-starter) to run it as a gRPC service. 
+* Java source files are generated from .proto files by the [Maven Protocol Buffers Plugin](https://www.xolstice.org/protobuf-maven-plugin/index.html) when running `mvn clean install`.
+* To access the database data directly from the provided file it uses the [SQLite JDBC Driver library](https://github.com/xerial/sqlite-jdbc).
+
+### Bonus
+To containerize the project we could use Docker. 
+Since the Maven build also provides the JAR file, we could run it as a Docker image composed together with the `database.db` volume.
+
+### Ideas for improvement
+* I limited the "Aggregated category scores over a period of time" max period to be 1 year. Otherwise, the weekly results might be inaccurate due to the implementation, where numbers of the week aren't separated by year.
+* Refactor AggregatedCategoryScoreServiceImpl.java to fix the bug mentioned above and make it more readable.
+* Write Javadoc to describe some classes and methods.
+* Use gRPC stream response to return larger datasets, e.g. for "Scores by ticket".
+
+---
 # Software Engineer Test Task
 
 As a test task for [Klaus](https://www.klausapp.com) software engineering position we ask our candidates to build a small [gRPC](https://grpc.io) service using language of their choice. Preferred language for new services in Klaus is [Go](https://golang.org).
