@@ -18,14 +18,17 @@ public class TicketCategoryScoresServiceImpl extends TicketCategoryScoresService
     private final RatingsService ratingsService;
     private final TicketCategoryScoreCalculator ticketCategoryScoreCalculator;
 
-    public TicketCategoryScoresServiceImpl(RatingsService ratingsService, TicketCategoryScoreCalculator ticketCategoryScoreCalculator) {
+    public TicketCategoryScoresServiceImpl(RatingsService ratingsService,
+                                           TicketCategoryScoreCalculator ticketCategoryScoreCalculator) {
         this.ratingsService = ratingsService;
         this.ticketCategoryScoreCalculator = ticketCategoryScoreCalculator;
     }
 
     @Override
     public void getTicketCategoryScores(TicketCategoryScoresRequest request, StreamObserver<TicketCategoryScoresResponse> responseObserver) {
-        Map<Integer, List<Rating>> ratingsByTicket = ratingsService.findRatingsByTicketIdInPeriod(LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate()));
+        Map<Integer, List<Rating>> ratingsByTicket =
+                ratingsService.findRatingsByTicketIdInPeriod(LocalDate.parse(request.getPeriodStartDate()),
+                        LocalDate.parse(request.getPeriodEndDate()));
         TicketCategoryScoresResponse response = buildResponse(ratingsByTicket);
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -34,7 +37,8 @@ public class TicketCategoryScoresServiceImpl extends TicketCategoryScoresService
     private TicketCategoryScoresResponse buildResponse(Map<Integer, List<Rating>> ratingsByTicket) {
         TicketCategoryScoresResponse.Builder responseBuilder = TicketCategoryScoresResponse.newBuilder();
         for (Map.Entry<Integer, List<Rating>> entry : ratingsByTicket.entrySet()) {
-            Map<Integer, BigDecimal> ticketScoresByCategoryId = ticketCategoryScoreCalculator.calculateTicketCategoryScoresByCategoryId(entry.getValue());
+            Map<Integer, BigDecimal> ticketScoresByCategoryId =
+                    ticketCategoryScoreCalculator.calculateTicketCategoryScoresByCategoryId(entry.getValue());
 
             List<CategoryScore> categoryScores = new ArrayList<>();
             for (Map.Entry<Integer, BigDecimal> score : ticketScoresByCategoryId.entrySet()) {

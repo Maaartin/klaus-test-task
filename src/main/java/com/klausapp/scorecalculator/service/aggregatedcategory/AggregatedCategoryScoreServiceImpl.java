@@ -23,7 +23,9 @@ public class AggregatedCategoryScoreServiceImpl implements AggregatedCategorySco
     private final RatingCategoriesCacheService ratingCategoriesCacheService;
     private final RatingsService ratingsService;
 
-    public AggregatedCategoryScoreServiceImpl(AggregatedCategoryScoreCalculator aggregatedCategoryScoreCalculator, RatingCategoriesCacheService ratingCategoriesCacheService, RatingsService ratingsService) {
+    public AggregatedCategoryScoreServiceImpl(AggregatedCategoryScoreCalculator aggregatedCategoryScoreCalculator,
+                                              RatingCategoriesCacheService ratingCategoriesCacheService,
+                                              RatingsService ratingsService) {
         this.aggregatedCategoryScoreCalculator = aggregatedCategoryScoreCalculator;
         this.ratingCategoriesCacheService = ratingCategoriesCacheService;
         this.ratingsService = ratingsService;
