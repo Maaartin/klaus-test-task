@@ -1,11 +1,7 @@
 package com.klausapp.scorecalculator.grpc;
 
-import com.google.rpc.Code;
-import com.google.rpc.Status;
 import com.klausapp.scorecalculator.service.aggregatedcategory.AggregatedCategoryScoreService;
 import com.klausapp.scorecalculator.service.aggregatedcategory.AggregatedCategoryScores;
-import com.klausapp.scorecalculator.util.DateUtil;
-import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -25,25 +21,13 @@ public class CategoryScoresServiceImpl extends CategoryScoresServiceGrpc.Categor
 
     @Override
     public void getCategoryScores(CategoryScoresRequest request, StreamObserver<CategoryScoresResponse> responseObserver) {
-        if (DateUtil.getMonthsBetween(LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate())) >= 12) {
-            Status status = getTimePeriodExceptionStatus();
-            responseObserver.onError(StatusProto.toStatusRuntimeException(status));
-        } else {
-            List<AggregatedCategoryScores> aggregatedCategoryScores =
-                    aggregatedCategoryScoreService.calculateAggregatedCategoryScoresForPeriod(
-                            LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate()));
+        List<AggregatedCategoryScores> aggregatedCategoryScores =
+                aggregatedCategoryScoreService.calculateAggregatedCategoryScoresForPeriod(
+                        LocalDate.parse(request.getPeriodStartDate()), LocalDate.parse(request.getPeriodEndDate()));
 
-            CategoryScoresResponse response = buildResponse(aggregatedCategoryScores);
-            responseObserver.onNext(response);
-            responseObserver.onCompleted();
-        }
-    }
-
-    private static Status getTimePeriodExceptionStatus() {
-        return Status.newBuilder()
-                .setCode(Code.INVALID_ARGUMENT_VALUE)
-                .setMessage("Time period can't be longer than 12 months!")
-                .build();
+        CategoryScoresResponse response = buildResponse(aggregatedCategoryScores);
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     private static CategoryScoresResponse buildResponse(List<AggregatedCategoryScores> aggregatedCategoryScores) {
