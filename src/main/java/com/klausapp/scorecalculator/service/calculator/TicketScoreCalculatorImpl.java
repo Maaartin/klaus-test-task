@@ -18,8 +18,8 @@ public class TicketScoreCalculatorImpl implements TicketScoreCalculator {
 
     @Override
     public int calculateTicketScore(List<Rating> ticketRatings) {
-        Map<Integer, BigDecimal> ticketScoresByCategory = ticketCategoryScoreCalculator.getTicketScoresByCategory(ticketRatings);
-        return (int) Math.round(ticketScoresByCategory.values().stream()
+        Map<Integer, BigDecimal> ticketScoresByCategoryId = ticketCategoryScoreCalculator.calculateTicketCategoryScoresByCategoryId(ticketRatings);
+        return (int) Math.round(ticketScoresByCategoryId.values().stream()
                 .mapToInt(BigDecimal::intValue)
                 .average()
                 .orElse(0.0));

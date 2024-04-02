@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface TicketCategoryScoreCalculator {
 
-    Map<Integer, BigDecimal> getTicketScoresByCategory(List<Rating> ticketRatings);
+    Map<Integer, BigDecimal> calculateTicketCategoryScoresByCategoryId(List<Rating> ticketRatings);
 
 }

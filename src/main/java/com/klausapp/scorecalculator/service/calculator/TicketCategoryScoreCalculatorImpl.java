@@ -18,13 +18,13 @@ public class TicketCategoryScoreCalculatorImpl implements TicketCategoryScoreCal
     }
 
     @Override
-    public Map<Integer, BigDecimal> getTicketScoresByCategory(List<Rating> ticketRatings) {
-        Map<Integer, BigDecimal> scoresByCategory = new HashMap<>();
+    public Map<Integer, BigDecimal> calculateTicketCategoryScoresByCategoryId(List<Rating> ticketRatings) {
+        Map<Integer, BigDecimal> scoresByCategoryId = new HashMap<>();
         for (Rating rating : ticketRatings) {
-            scoresByCategory.put(rating.ratingCategoryId(),
+            scoresByCategoryId.put(rating.ratingCategoryId(),
                     scoreCalculator.calculateScore(rating.ratingCategoryId(), rating.rating()));
         }
-        return scoresByCategory;
+        return scoresByCategoryId;
     }
 
 }

@@ -29,10 +29,10 @@ public class TicketCategoryScoresServiceImpl extends TicketCategoryScoresService
 
         TicketCategoryScoresResponse.Builder responseBuilder = TicketCategoryScoresResponse.newBuilder();
         for (Map.Entry<Integer, List<Rating>> entry : ratingsByTicket.entrySet()) {
-            Map<Integer, BigDecimal> ticketScoresByCategory = ticketCategoryScoreCalculator.getTicketScoresByCategory(entry.getValue());
+            Map<Integer, BigDecimal> ticketScoresByCategoryId = ticketCategoryScoreCalculator.calculateTicketCategoryScoresByCategoryId(entry.getValue());
 
             List<CategoryScore> categoryScores = new ArrayList<>();
-            for (Map.Entry<Integer, BigDecimal> score : ticketScoresByCategory.entrySet()) {
+            for (Map.Entry<Integer, BigDecimal> score : ticketScoresByCategoryId.entrySet()) {
                 CategoryScore categoryScore = CategoryScore.newBuilder()
                         .setCategoryId(score.getKey())
                         .setCategoryScore(score.getValue().intValue())
