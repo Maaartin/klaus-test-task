@@ -11,10 +11,10 @@ import java.util.Map;
 @Service
 public class TicketCategoryScoreCalculatorImpl implements TicketCategoryScoreCalculator {
 
-    private final CategoryScoreCalculator categoryScoreCalculator;
+    private final ScoreCalculator scoreCalculator;
 
-    public TicketCategoryScoreCalculatorImpl(CategoryScoreCalculator categoryScoreCalculator) {
-        this.categoryScoreCalculator = categoryScoreCalculator;
+    public TicketCategoryScoreCalculatorImpl(ScoreCalculator scoreCalculator) {
+        this.scoreCalculator = scoreCalculator;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class TicketCategoryScoreCalculatorImpl implements TicketCategoryScoreCal
         Map<Integer, BigDecimal> scoresByCategory = new HashMap<>();
         for (Rating rating : ticketRatings) {
             scoresByCategory.put(rating.ratingCategoryId(),
-                    categoryScoreCalculator.calculateCategoryScore(rating.ratingCategoryId(), rating.rating()));
+                    scoreCalculator.calculateScore(rating.ratingCategoryId(), rating.rating()));
         }
         return scoresByCategory;
     }

@@ -7,16 +7,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Service
-public class CategoryScoreCalculatorImpl implements CategoryScoreCalculator {
+public class ScoreCalculatorImpl implements ScoreCalculator {
 
     private final RatingCategoriesCacheService ratingCategoriesCacheService;
 
-    public CategoryScoreCalculatorImpl(RatingCategoriesCacheService ratingCategoriesCacheService) {
+    public ScoreCalculatorImpl(RatingCategoriesCacheService ratingCategoriesCacheService) {
         this.ratingCategoriesCacheService = ratingCategoriesCacheService;
     }
 
     @Override
-    public BigDecimal calculateCategoryScore(Integer categoryId, Integer rating) {
+    public BigDecimal calculateScore(Integer categoryId, Integer rating) {
         BigDecimal weight = ratingCategoriesCacheService.getRatingCategoryWeights().get(categoryId);
         if (BigDecimal.ZERO.equals(weight)) return BigDecimal.ZERO;
         return calculateScore(rating, weight);
