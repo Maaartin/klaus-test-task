@@ -20,9 +20,20 @@ public class RatingsServiceImpl implements RatingsService {
 
     @Override
     public Map<Integer, List<Rating>> findRatingsByTicketIdInPeriod(LocalDate periodStart, LocalDate periodEnd) {
-        List<Rating> ratings = ratingsRepository.findRatingsForPeriod(periodStart, periodEnd.plusDays(1));
+        List<Rating> ratings = findRatings(periodStart, periodEnd);
         return ratings.stream()
                 .collect(Collectors.groupingBy(Rating::ticketId));
+    }
+
+    @Override
+    public Map<Integer, List<Rating>> findRatingsByCategoryIdInPeriod(LocalDate periodStart, LocalDate periodEnd) {
+        List<Rating> ratings = findRatings(periodStart, periodEnd);
+        return ratings.stream()
+                .collect(Collectors.groupingBy(Rating::ratingCategoryId));
+    }
+
+    private List<Rating> findRatings(LocalDate periodStart, LocalDate periodEnd) {
+        return ratingsRepository.findRatingsForPeriod(periodStart, periodEnd.plusDays(1));
     }
 
 }

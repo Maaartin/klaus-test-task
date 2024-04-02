@@ -10,4 +10,6 @@ public interface RatingsService {
 
     Map<Integer, List<Rating>> findRatingsByTicketIdInPeriod(LocalDate periodStart, LocalDate periodEnd);
 
+    Map<Integer, List<Rating>> findRatingsByCategoryIdInPeriod(LocalDate periodStart, LocalDate periodEnd);
+
 }
