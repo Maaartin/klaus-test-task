@@ -8,7 +8,6 @@ import com.klausapp.scorecalculator.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,16 +53,16 @@ public class AggregatedCategoryScoreServiceImpl implements AggregatedCategorySco
     }
 
     private Map<String, Integer> getScoresByWeeks(LocalDate periodStart, LocalDate periodEnd, Map<String, Integer> scoreByDate) {
-        Map<Integer, List<Integer>> dailyScoresByWeekNumber = getDailyScoresByWeekNumber(scoreByDate);
+        Map<String, List<Integer>> dailyScoresByWeekOfYear = getDailyScoresByWeekOfYear(scoreByDate);
         Map<String, Integer> scoreByWeek = new HashMap<>();
-        for (Map.Entry<Integer, List<Integer>> entry : dailyScoresByWeekNumber.entrySet()) {
-            Integer weekNumber = entry.getKey();
+        for (Map.Entry<String, List<Integer>> entry : dailyScoresByWeekOfYear.entrySet()) {
+            String weekOfYear = entry.getKey();
             List<Integer> dailyScores = entry.getValue();
             int weeklyAverage = (int) Math.round(dailyScores.stream()
                     .mapToInt(Integer::intValue)
                     .average()
                     .orElse(0.0));
-            scoreByWeek.put("Week " + weekNumber, weeklyAverage);
+            scoreByWeek.put("Week " + weekOfYear, weeklyAverage);
         }
         return scoreByWeek;
     }
@@ -86,20 +85,23 @@ public class AggregatedCategoryScoreServiceImpl implements AggregatedCategorySco
         return scoreByDate;
     }
 
-    private static Map<Integer, List<Integer>> getDailyScoresByWeekNumber(Map<String, Integer> scoreByDate) {
-        Map<Integer, List<Integer>> dailyScoresByWeekNumber = new HashMap<>();
+    private static Map<String, List<Integer>> getDailyScoresByWeekOfYear(Map<String, Integer> scoreByDate) {
+        Map<String, List<Integer>> dailyScoresByWeekOfYear = new HashMap<>();
         for (Map.Entry<String, Integer> entry : scoreByDate.entrySet()) {
             String date = entry.getKey();
             Integer score = entry.getValue();
-            int weekNumber = LocalDate.parse(date).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
-            List<Integer> scores = dailyScoresByWeekNumber.get(weekNumber);
+            LocalDate localDate = LocalDate.parse(date);
+            int yearNumber = localDate.getYear();
+            int weekNumber = localDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+            String weekOfYear = yearNumber + "-" + weekNumber;
+            List<Integer> scores = dailyScoresByWeekOfYear.get(weekOfYear);
             if (scores == null) {
                 scores = new ArrayList<>();
             }
             scores.add(score);
-            dailyScoresByWeekNumber.put(weekNumber, scores);
+            dailyScoresByWeekOfYear.put(weekOfYear, scores);
         }
-        return dailyScoresByWeekNumber;
+        return dailyScoresByWeekOfYear;
     }
 
 }
