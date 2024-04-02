@@ -32,7 +32,7 @@ public class AggregatedCategoryScoreServiceImpl implements AggregatedCategorySco
     @Override
     public List<AggregatedCategoryScores> calculateAggregatedCategoryScoresForPeriod(LocalDate periodStart, LocalDate periodEnd) {
         List<AggregatedCategoryScores> aggregatedCategoryScores = new ArrayList<>();
-        final boolean weeklyAggregation = Period.between(periodStart, periodEnd).getMonths() > 0;
+        final boolean weeklyAggregation = DateUtil.getMonthsBetween(periodStart, periodEnd) > 0;
         Map<Integer, List<Rating>> ratingsByCategoryId = ratingsService.findRatingsByCategoryIdInPeriod(periodStart, periodEnd);
         for (Map.Entry<Integer, List<Rating>> entry : ratingsByCategoryId.entrySet()) {
             Integer categoryId = entry.getKey();
