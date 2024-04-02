@@ -1,4 +1,4 @@
-package com.klausapp.scorecalculator.service.ticketcategoryscores;
+package com.klausapp.scorecalculator.grpc;
 
 import com.klausapp.scorecalculator.dao.Rating;
 import com.klausapp.scorecalculator.service.calculator.TicketCategoryScoreCalculator;

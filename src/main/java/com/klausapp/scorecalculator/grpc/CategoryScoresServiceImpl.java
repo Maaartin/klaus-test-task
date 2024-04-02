@@ -1,6 +1,7 @@
-package com.klausapp.scorecalculator.service.aggregatedcategory;
+package com.klausapp.scorecalculator.grpc;
 
-import com.klausapp.scorecalculator.service.categoryscores.*;
+import com.klausapp.scorecalculator.service.aggregatedcategory.AggregatedCategoryScoreService;
+import com.klausapp.scorecalculator.service.aggregatedcategory.AggregatedCategoryScores;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
