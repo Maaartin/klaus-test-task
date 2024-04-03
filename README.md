@@ -12,6 +12,7 @@ Since the Maven build also provides the JAR file, we could run it as a Docker im
 * Refactor AggregatedCategoryScoreServiceImpl.java to make it more readable.
 * Write Javadoc to describe some classes and methods.
 * Use gRPC stream response to return larger datasets, e.g. for "Scores by ticket".
+* Write tests.
 
 ---
 # Software Engineer Test Task
